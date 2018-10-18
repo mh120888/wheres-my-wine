@@ -34,6 +34,11 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.8'
 end
 
+group :test do
+  gem 'cucumber-rails', require: false
+  # database_cleaner is not required, but highly recommended
+  gem 'database_cleaner'
+end
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
