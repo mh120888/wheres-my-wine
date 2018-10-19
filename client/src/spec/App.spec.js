@@ -25,16 +25,58 @@ describe("App", () => {
   });
 
   describe("given wines are in state", () => {
+    let list;
+
     beforeEach(() => {
       component.setState({wines: wineData});
+      list = component.find('ul');
     });
 
     it('renders a list of wines', () => {
-      const list = component.find('ul');
       expect(list.length).toBe(1);
 
       const expectedText = `${wineData[0].vintage} ${wineData[0].winemaker} ${wineData[0].variety}`;
-      expect(list.find("li").first().text()).toBe(expectedText);
+      expect(list.find("li").first().find("span").text()).toBe(expectedText);
+    });
+
+    it('renders a delete button for each wine', () => {
+      expect(list.find("li").first().find("button").text()).toBe("Remove wine");
+    });
+
+    describe("choosing to remove a wine", () => {
+      it("prompts the user to confirm their decision", () => {
+        const spy = jest.spyOn(window, 'confirm');
+        list.find("li").first().find("button").simulate("click");
+        expect(spy).toHaveBeenCalledWith("Are you sure you want to remove this wine?");
+      });
+
+      describe("given the user confirms their choice", () => {
+        beforeEach(() => {
+          fetch
+            .once(JSON.stringify(wineData))
+            .once(JSON.stringify({}))
+          global.confirm = jest.fn(() => true);
+
+          const fakeEvent = { currentTarget: { dataset: { wine: 1 } } }
+          list.find("li").first().find("button").simulate("click", fakeEvent);
+        });
+
+        afterEach(() => {
+          fetch.resetMocks();
+        });
+
+        it("deletes the wine", () => {
+          const deleteFetchCall = fetch.mock.calls[1];
+          const fetchUrl = new URL(deleteFetchCall[0]);
+          expect(fetchUrl.pathname).toBe("/wines/1");
+          expect(deleteFetchCall[1].method).toBe("DELETE");
+        });
+
+        it("fetches the updated list of wine", () => {
+          const fetchUrl = new URL(fetch.mock.calls[2][0]);
+          expect(fetchUrl.pathname).toBe("/wines/");
+        });
+      });
     });
   });
 

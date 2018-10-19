@@ -2,6 +2,13 @@ body {
   padding: 1em 0.5em;
 }
 
+.wine-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 .loading-circle {
   display: block;
   width: 64px;
