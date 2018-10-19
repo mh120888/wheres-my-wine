@@ -13,7 +13,7 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <h1>Where's My Wine?</h1>
+        <h1 className="display-1 text-center">Where's My Wine?</h1>
         {this.displayWines()}
       </div>
     );
@@ -31,14 +31,14 @@ class App extends Component {
     } else if (this.state.wines.length > 0) {
       const children = [];
       this.state.wines.forEach((wine, index) => children.push(this.getWine(wine, index)));
-      return <ul>{children}</ul>;
+      return <ul className="list-group">{children}</ul>;
     } else {
       return <p>{noWinesMessage}</p>;
     }
   }
 
   getWine(wine, index) {
-    return <li key={index}>{wine.vintage} {wine.winemaker} {wine.variety}</li>;
+    return <li className="list-group-item" key={index}>{wine.vintage} {wine.winemaker} {wine.variety}</li>;
   }
 }
 
