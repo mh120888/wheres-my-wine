@@ -33,7 +33,8 @@ RSpec.describe WinesController, type: :controller do
       winemaker: "Robert Mondavi",
       vintage: "2016",
       variety: "Cabernet Sauvignon",
-      region: "California"
+      region: "California",
+      position: "2"
     }
   }
 
