@@ -26,3 +26,31 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.loading-circle {
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+}
+
+.loading-circle:after {
+  content: " ";
+  display: block;
+  width: 46px;
+  height: 46px;
+  margin: 1px;
+  border-radius: 50%;
+  border: 5px solid #0fade9;
+  border-color: #0fade9 transparent #0fade9 transparent;
+  animation: loading-circle 1.2s linear infinite;
+}
+
+@keyframes loading-circle {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
