@@ -15,7 +15,12 @@ class WineJail extends Component {
   }
 
   renderWineJailSlot(slot) {
-    return <div className="wine-jail-slot" key={slot}></div>
+    const wine = this.props.wines.find((wine) => wine.position == slot);
+    if (wine) {
+      return <div className="wine-jail-slot full" key={slot} data-wine={JSON.stringify(wine)}></div>
+    } else {
+      return <div className="wine-jail-slot" key={slot}></div>
+    }
   }
 }
 

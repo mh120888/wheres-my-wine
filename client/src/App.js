@@ -27,7 +27,7 @@ class App extends Component {
       return <Loading/>;
     } else if (this.state.wines.length > 0) {
       return <div>
-        <WineJail/>
+        <WineJail wines={this.state.wines}/>
         <WineList wines={this.state.wines} getAllWines={this.getAllWines}/>
       </div>;
     } else {
