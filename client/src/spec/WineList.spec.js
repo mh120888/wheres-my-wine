@@ -4,27 +4,17 @@ import { shallow } from 'enzyme'
 
 describe("WineList", () => {
   let component;
+  const getAllWines = jest.fn();
 
   beforeEach(() => {
-    fetch.mockResponseOnce(JSON.stringify(wineData))
-    component = shallow(<WineList/>);
-  });
-
-  afterEach(() => {
-    fetch.resetMocks();
-  });
-
-  it('fetches a list of wines', () => {
-    expect(fetch.mock.calls.length).toEqual(1);
-    const fetchUrl = new URL(fetch.mock.calls[0][0]);
-    expect(fetchUrl.pathname).toBe("/wines/");
+    fetch.once(JSON.stringify({}));;
+    component = shallow(<WineList wines={wineData} getAllWines={getAllWines}/>);
   });
 
   describe("given wines are in state", () => {
     let list;
 
     beforeEach(() => {
-      component.setState({wines: wineData});
       list = component.find('ul');
     });
 
@@ -48,9 +38,7 @@ describe("WineList", () => {
 
       describe("given the user confirms their choice", () => {
         beforeEach(() => {
-          fetch
-            .once(JSON.stringify(wineData))
-            .once(JSON.stringify({}))
+          fetch.once(JSON.stringify({}));
           global.confirm = jest.fn(() => true);
 
           const fakeEvent = { currentTarget: { dataset: { wine: 1 } } }
@@ -62,47 +50,16 @@ describe("WineList", () => {
         });
 
         it("deletes the wine", () => {
-          const deleteFetchCall = fetch.mock.calls[1];
+          const deleteFetchCall = fetch.mock.calls[0];
           const fetchUrl = new URL(deleteFetchCall[0]);
           expect(fetchUrl.pathname).toBe("/wines/1");
           expect(deleteFetchCall[1].method).toBe("DELETE");
         });
 
         it("fetches the updated list of wine", () => {
-          const fetchUrl = new URL(fetch.mock.calls[2][0]);
-          expect(fetchUrl.pathname).toBe("/wines/");
+          expect(getAllWines).toHaveBeenCalled();
         });
       });
-    });
-  });
-
-  describe("given wines are not in state", () => {
-    beforeEach(() => {
-      component.setState({ wines: undefined });
-    });
-
-    it('does not render a list of wines', () => {
-      const list = component.find('ul');
-      expect(list.length).toBe(0);
-    });
-
-    it('renders a loading spinner', () => {
-      expect(component.find("Loading").length).toBe(1);
-    });
-  });
-
-  describe("given wines are in state, but the list is empty", () => {
-    beforeEach(() => {
-      component.setState({ wines: [] });
-    });
-
-    it('does not render a list of wines', () => {
-      const list = component.find('ul');
-      expect(list.length).toBe(0);
-    });
-
-    it('renders a message stating there are no wines', () => {
-      expect(component.find("p").text()).toBe("You have no wine");
     });
   });
 });
