@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import WineJailSlot from './WineJailSlot';
 
 class WineJail extends Component {
   render() {
@@ -16,11 +17,7 @@ class WineJail extends Component {
 
   renderWineJailSlot(slot) {
     const wine = this.props.wines.find((wine) => wine.position == slot);
-    if (wine) {
-      return <div className="wine-jail-slot full" key={slot} data-wine={JSON.stringify(wine)}></div>
-    } else {
-      return <div className="wine-jail-slot" key={slot}></div>
-    }
+    return <WineJailSlot wine={wine} key={slot}/>;
   }
 }
 

@@ -13,18 +13,8 @@ describe("WineJail", () => {
   it('renders a wine jail grid', () => {
     const wineJailContainer = component.find("div[className='wine-jail']");
     expect(wineJailContainer.length).toBe(1);
-
-    expect(wineJailContainer.find("div[className*='wine-jail-slot']").length).toBe(96);
-  });
-
-  it('marks a slot as "full" if a wine matches its position', () => {
-    const firstSlot = component.find("div[className*='wine-jail-slot']").first();
-    expect(firstSlot.props()['className'].includes("full")).toBe(true);
-  });
-
-  it('adds the JSON data of the wine as a data attribute if a wine matches its position', () => {
-    const firstSlot = component.find("div[className*='wine-jail-slot']").first();
-    expect(firstSlot.props()['data-wine']).toBe(JSON.stringify(wineData[0]));
+    expect(wineJailContainer.find("WineJailSlot").length).toBe(96);
+    expect(wineJailContainer.find("WineJailSlot").first().prop("wine")).toBe(wineData[0]);
   });
 });
 
