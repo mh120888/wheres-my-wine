@@ -20,13 +20,18 @@ body {
 }
 
 .wine-jail-slot {
-  position: relative;;
+  position: relative;
   display: inline-block;
   background: #cecece;
   border-radius: 50%;
   padding-bottom: 15%;
   flex: 0 0 15%;
   margin-bottom: 0.5em;
+}
+
+.wine-jail-slot:hover {
+  cursor: pointer;
+  box-shadow: 0 0 10px #333;
 }
 
 .wine-jail-slot::after {
