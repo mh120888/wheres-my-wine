@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import WineJailSlot from './WineJailSlot';
 
 class WineJail extends Component {
+  constructor() {
+    super();
+
+    this.renderWineJailSlot = this.renderWineJailSlot.bind(this);
+  }
+
   render() {
     const wineJailSlots = [];
     for (let slot = 1; slot < 97; slot++) {
@@ -17,7 +23,7 @@ class WineJail extends Component {
 
   renderWineJailSlot(slot) {
     const wine = this.props.wines.find((wine) => wine.position == slot);
-    return <WineJailSlot wine={wine} key={slot}/>;
+    return <WineJailSlot wine={wine} key={slot} updateWines={this.props.getAllWines}/>;
   }
 }
 

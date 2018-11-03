@@ -23,7 +23,9 @@ describe("App", () => {
   });
 
   it('renders a WineJail', () => {
-    expect(component.find('WineJail').length).toBe(1);
+    const wineJail = component.find('WineJail');
+    expect(wineJail.length).toBe(1);
+    expect(wineJail.props().getAllWines).toBe(component.instance().getAllWines);
   });
 
   it('fetches a list of wines', () => {

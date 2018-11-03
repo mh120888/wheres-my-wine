@@ -27,7 +27,7 @@ class App extends Component {
       return <Loading/>;
     } else if (this.state.wines.length > 0) {
       return <div>
-        <WineJail wines={this.state.wines}/>
+        <WineJail wines={this.state.wines} getAllWines={this.getAllWines}/>
         <WineList wines={this.state.wines} getAllWines={this.getAllWines}/>
       </div>;
     } else {
@@ -36,7 +36,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.getAllWines();
+    this.getAllWines(); 
   }
 
   getAllWines() {

@@ -4,10 +4,11 @@ import { shallow } from 'enzyme'
 
 describe("WineJail", () => {
   let component;
+  const getAllWines = jest.fn();
 
   beforeEach(() => {
     fetch.mockResponseOnce(JSON.stringify(wineData))
-    component = shallow(<WineJail wines={wineData}/>);
+    component = shallow(<WineJail wines={wineData} getAllWines/>);
   });
 
   it('renders a wine jail grid', () => {
@@ -15,6 +16,7 @@ describe("WineJail", () => {
     expect(wineJailContainer.length).toBe(1);
     expect(wineJailContainer.find("WineJailSlot").length).toBe(96);
     expect(wineJailContainer.find("WineJailSlot").first().prop("wine")).toBe(wineData[0]);
+    expect(wineJailContainer.find("WineJailSlot").first().prop("updateWines")).toBeDefined();
   });
 });
 
